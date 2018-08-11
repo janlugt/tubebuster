@@ -39,7 +39,7 @@ def get_thumbnails():
     os.mkdir(ascii_title)
     urllib.request.urlretrieve(best_thumbnail['url'], '%s/thumbnail.jpg' % ascii_title)
     url = pyqrcode.create('https://youtu.be/%s' % video_id)
-    url.svg('%s/qr.svg', scale=8)
+    url.svg('%s/qr.svg' % ascii_title, scale=8)
     print('%s %s' % (title, video_id))
 
 
@@ -48,5 +48,3 @@ if __name__ == "__main__":
     get_thumbnails()
   except HttpError as e:
     print ("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
-
-    #import pdb;pdb.set_trace()

@@ -28,6 +28,12 @@ def get_thumbnails():
     except KeyError:
       break
 
+  with open('all_videos.txt', 'a') as all_videos:
+    all_videos.write('title,url\n')
+    for item in playlist_items:
+        all_videos.write('%s,https://youtu.be/%s\n' % (item['snippet']['title'].replace(',', ''), item['contentDetails']['videoId']))
+  return
+      
   for item in playlist_items:
     title = item['snippet']['title']
     video_id = item['contentDetails']['videoId']

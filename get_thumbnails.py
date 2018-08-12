@@ -20,7 +20,8 @@ def get_thumbnails():
   while True:
     response = youtube.playlistItems().list(
       part='snippet,contentDetails',
-      playlistId='PLtLUb68F1KiPYTU3LWhq-YxRGkNdBCmI1',
+      # playlistId='PLtLUb68F1KiPYTU3LWhq-YxRGkNdBCmI1', # Dustin/Claudia
+      playlistId='PLeL9XIWO22bKqKHcLxHxAeVMp-ClDvj8H', # Stu
       maxResults=50,
       pageToken=next_page_token,
     ).execute()
@@ -38,7 +39,8 @@ def get_thumbnails():
   # Case cover template
   template_loader = jinja2.FileSystemLoader(searchpath='./')
   template_env = jinja2.Environment(loader=template_loader, trim_blocks=True, lstrip_blocks=True)
-  service_template = template_env.get_template('case_cover.jinja')
+  case_cover_template = template_env.get_template('case_cover.jinja')
+  qr_insert_template = template_env.get_template('qr_insert.jinja')
   
   for item in playlist_items:
     title = item['snippet']['title']
@@ -89,11 +91,14 @@ def get_thumbnails():
     # Case cover
     case_fields = {
       'title': title,
+      'video_id': video_id,
       'description': description.replace('\n', '<br />'),
       'ascii_title': ascii_title,
     }
-    html_text = service_template.render(fields=case_fields)
+    html_text = case_cover_template.render(fields=case_fields)
     pdfkit.from_string(html_text, '%s/case_cover.pdf' % ascii_title)
+    html_text = qr_insert_template.render(fields=case_fields)
+    pdfkit.from_string(html_text, '%s/qr_insert.pdf' % ascii_title)
 
 
 if __name__ == "__main__":

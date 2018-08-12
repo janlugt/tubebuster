@@ -47,7 +47,7 @@ def get_thumbnails():
 
     # Folder
     ascii_title = title.encode('ascii', 'ignore').decode()
-    ascii_title = re.sub(r'[^A-Za-z0-9 ]', '', ascii_title)
+    ascii_title = re.sub(r'[^A-Za-z0-9 ]', '', ascii_title).strip()
     try:
       os.mkdir(ascii_title)
     except FileExistsError:

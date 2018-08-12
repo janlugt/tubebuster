@@ -40,7 +40,7 @@ def get_thumbnails():
   template_env = jinja2.Environment(loader=template_loader, trim_blocks=True, lstrip_blocks=True)
   service_template = template_env.get_template('case_cover.jinja')
   
-  for item in playlist_items[:3]:
+  for item in playlist_items:
     title = item['snippet']['title']
     video_id = item['contentDetails']['videoId']
     print(title)
